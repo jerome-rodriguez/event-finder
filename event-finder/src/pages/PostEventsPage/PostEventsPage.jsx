@@ -11,7 +11,7 @@ function PostEventsPage() {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
-  const [categories, setCategories] = useState([]); // State to store categories from API
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -140,8 +140,8 @@ function PostEventsPage() {
               Select a category
             </option>
             {categories.map((cat) => (
-              <option key={uuidv4()} value={cat.name}>
-                {cat.name}
+              <option key={uuidv4()} value={cat}>
+                {cat}
               </option>
             ))}
           </select>
