@@ -1,63 +1,50 @@
 import "./Events.scss";
-
-// import { Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import { API_URL, api_key } from "../../utils/api";
+import { useEffect, useState } from "react";
+import "./Events.scss";
 
-export default function PhotoCard({ selectedTag, isTagsPanelOpen }) {
-  const [photos, setPhotos] = useState([]);
+export default function Events() {
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    const getPhotos = async () => {
+    const fetchEvents = async () => {
       try {
-        const response = await axios.get("localhost:8080/");
-        setPhotos(response.data);
+        const eventsRes = await axios.get("http://localhost:8080/events");
+        setEvents(eventsRes.data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     };
-
-    getPhotos();
+    fetchEvents();
   }, []);
 
-  const filteredPhotos = selectedTag
-    ? photos.filter((photo) => photo.tags.includes(selectedTag))
-    : photos;
+  if (!events) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <section
-      className={`photo-gallery ${
-        isTagsPanelOpen ? "photo-gallery--with-filter-panel" : ""
-      }`}
-    >
-      {filteredPhotos.map((photo) => (
-        // <Link
-        //   to={`/photos/${photo.id}`}
-        //   key={photo.id}
-        //   className="photo-gallery__link"
-        // >
-        <article
-          className={`photo-card ${
-            isTagsPanelOpen ? "photo-card--with-filter-panel" : ""
-          }`}
-        >
-          <img
-            className="photo-card__photo"
-            src={photo.photo}
-            alt={photo.photoDescription}
-          />
-          <h4 className="photo-card__photographer">{photo.photographer}</h4>
-          <div className="photo-card__tags">
-            {photo.tags.map((tag, index) => (
-              <span key={index} className="photo-card__tag">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </article>
-        // </Link>
-      ))}
+    <section className="events">
+      <div className="events__grid-container">
+        {events.map((event) => (
+          <article key={event.id} className="event-card">
+            <img
+              src={event.photo}
+              alt={event.name}
+              className="event-card__image"
+            />
+            <div className="event-card__content">
+              <h2 className="event-card__title">{event.name}</h2>
+              <p className="event-card__date-time">
+                {event.date} at {event.time}
+              </p>
+              <p className="event-card__location">{event.location}</p>
+              <p className="event-card__category">{event.category}</p>
+              <p className="event-card__description">{event.description}</p>
+              <p className="event-card__price">Price: ${event.price}</p>
+            </div>
+          </article>
+        ))}
+      </div>
     </section>
   );
 }

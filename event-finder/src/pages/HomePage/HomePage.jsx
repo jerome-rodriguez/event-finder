@@ -1,22 +1,15 @@
-import { useState } from "react";
-
+import "../HomePage/HomePage.scss";
+import Events from "../../components/Events/Events";
+import { Link } from "react-router-dom";
 import "../HomePage/HomePage.scss";
 
-import FilterPanel from "../../components/FilterPanel/FilterPanel";
-// import Main from "../../components/Main/Main";
-
-export default function HomePage({ isTagsPanelOpen }) {
-  const [selectedTag, setSelectedTag] = useState(null);
-
+export default function HomePage() {
   return (
     <section className="home-page">
-      {isTagsPanelOpen && (
-        <FilterPanel
-          selectedTag={selectedTag}
-          setSelectedTag={setSelectedTag}
-        />
-      )}
-      <Events selectedTag={selectedTag} isTagsPanelOpen={isTagsPanelOpen} />
+      <button className="homepage__button">
+        <Link to="/addevents">Share an event with your friends</Link>
+      </button>
+      <Events />
     </section>
   );
 }

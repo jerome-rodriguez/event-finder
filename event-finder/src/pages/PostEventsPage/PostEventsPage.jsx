@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import "../PostEventsPage/PostEventsPage.scss";
 import { v4 as uuidv4 } from "uuid";
+import { Link } from "react-router-dom";
 
 function PostEventsPage() {
   const [name, setName] = useState("");
@@ -83,6 +84,9 @@ function PostEventsPage() {
 
   return (
     <section className="event-form__container">
+      <button className="event-form__button">
+        <Link to="/">Back to events list</Link>
+      </button>
       <form className="event-form" onSubmit={handleSubmit}>
         <div className="event-form__field">
           <label htmlFor="name">Event Name:</label>
