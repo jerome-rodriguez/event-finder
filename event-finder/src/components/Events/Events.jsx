@@ -5,13 +5,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 // import { API_URL, api_key } from "../../utils/api";
 
-export default function PhotoCard({ selectedTag, isTagsPanelOpen }) {
+// export default function PhotoCard({ selectedTag, isTagsPanelOpen }) {
+//   const [photos, setPhotos] = useState([]);
+
+export default function PhotoCard() {
   const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
     const getPhotos = async () => {
       try {
-        const response = await axios.get("localhost:8080/");
+        const response = await axios.get("https://fomo-api.onrender.com/");
         setPhotos(response.data);
       } catch (error) {
         console.error(error);
@@ -21,40 +24,31 @@ export default function PhotoCard({ selectedTag, isTagsPanelOpen }) {
     getPhotos();
   }, []);
 
-  const filteredPhotos = selectedTag
-    ? photos.filter((photo) => photo.tags.includes(selectedTag))
-    : photos;
+  //   const filteredPhotos = selectedTag
+  //     ? photos.filter((photo) => photo.tags.includes(selectedTag))
+  //     : photos;
 
   return (
-    <section
-      className={`photo-gallery ${
-        isTagsPanelOpen ? "photo-gallery--with-filter-panel" : ""
-      }`}
-    >
-      {filteredPhotos.map((photo) => (
+    <section className="events-gallery">
+      {photos.map((photo) => (
         // <Link
         //   to={`/photos/${photo.id}`}
         //   key={photo.id}
         //   className="photo-gallery__link"
         // >
-        <article
-          className={`photo-card ${
-            isTagsPanelOpen ? "photo-card--with-filter-panel" : ""
-          }`}
-        >
+        <article className={"event-card"} key={photo.id}>
           <img
-            className="photo-card__photo"
+            className="event__photo"
             src={photo.photo}
-            alt={photo.photoDescription}
+            alt={photo.description}
           />
-          <h4 className="photo-card__photographer">{photo.photographer}</h4>
-          <div className="photo-card__tags">
-            {photo.tags.map((tag, index) => (
-              <span key={index} className="photo-card__tag">
-                {tag}
-              </span>
-            ))}
-          </div>
+          <h4 className="event__name">{photo.name}</h4>
+          <p className="event__description">{photo.description}</p>
+          <p className="event__category">{photo.category}</p>
+          <p className="event__date">{photo.date}</p>
+          <p className="event__time">{photo.time}</p>
+          <p className="event__location">{photo.location}</p>
+          <p className="event__price">{photo.price}</p>
         </article>
         // </Link>
       ))}
