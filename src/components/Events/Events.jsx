@@ -9,7 +9,7 @@ export default function Events() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const eventsRes = await axios.get("http://localhost:8080/events");
+        const eventsRes = await axios.get("https://fomo-api.onrender.com/");
         setEvents(eventsRes.data);
       } catch (error) {
         console.log(error);
